@@ -1,22 +1,19 @@
 <template>
   <!-- give the sidebar z-50 class so its higher than the navbar if you want to see the logo -->
   <!-- you will need to add a little "X" button next to the logo in order to close it though -->
-  <div
-    class="w-1/2 md:w-1/3 lg:w-64 fixed md:top-0 md:left-0 h-screen lg:block bg-gray-100 border-r z-50"
-    :class="manageLayout.getSideBar ? '' : 'hidden'"
-    id="main-nav"
-  >
-    <div class="w-full h-20 border-b flex px-4 items-center mb-8">
-      <p class="font-semibold text-3xl text-blue-400 pl-4">
-        <q-avatar square>
-          <img
-            style="width: 100%; height: 100%"
-            src="../../../public/icon.ico"
-          />
-        </q-avatar>
-      </p>
-    </div>
 
+  <div class="overflow-hidde w-full h-20 border-b flex px-4 items-center mb-8">
+    <p class="font-semibold text-3xl text-blue-400 pl-4">
+      <q-avatar square>
+        <img style="width: 100%; height: 100%" src="../../../public/icon.ico" />
+      </q-avatar>
+    </p>
+  </div>
+  <q-scroll-area
+    :thumb-style="thumbStyle"
+    :bar-style="barStyle"
+    style="height: 100%; max-width: 300px"
+  >
     <div class="mb-4 px-4">
       <p class="pl-4 text-sm font-semibold mb-1">MAIN</p>
       <div
@@ -128,7 +125,7 @@
         <span class="text-gray-700">Settings</span>
       </div>
     </div>
-  </div>
+  </q-scroll-area>
 </template>
 
 <script setup>
@@ -137,4 +134,19 @@ const manageLayout = useManageLayout();
 defineOptions({
   name: "LoginPage",
 });
+const thumbStyle = {
+  right: "4px",
+  borderRadius: "5px",
+  backgroundColor: "#027be3",
+  width: "5px",
+  opacity: 0.75,
+};
+
+const barStyle = {
+  right: "2px",
+  borderRadius: "9px",
+  backgroundColor: "#027be3",
+  width: "9px",
+  opacity: 0.2,
+};
 </script>
