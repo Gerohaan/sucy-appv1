@@ -35,6 +35,7 @@
         </div>
 
         <div class="">
+          <!-- Inicio de card principales -->
           <div
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6"
           >
@@ -46,7 +47,7 @@
                   <div class="flex items-center mb-1">
                     <div class="text-2xl font-semibold">2</div>
                   </div>
-                  <div class="text-sm font-medium text-gray-400">Users</div>
+                  <div class="text-sm font-medium text-gray-400">Usuarios</div>
                 </div>
                 <div class="dropdown">
                   <button
@@ -86,7 +87,7 @@
               <a
                 href="/gebruikers"
                 class="text-[#f84525] font-medium text-sm hover:text-red-800"
-                >View</a
+                >Ver</a
               >
             </div>
             <div
@@ -96,13 +97,8 @@
                 <div>
                   <div class="flex items-center mb-1">
                     <div class="text-2xl font-semibold">100</div>
-                    <div
-                      class="p-1 rounded bg-emerald-500/10 text-emerald-500 text-[12px] font-semibold leading-none ml-2"
-                    >
-                      +30%
-                    </div>
                   </div>
-                  <div class="text-sm font-medium text-gray-400">Companies</div>
+                  <div class="text-sm font-medium text-gray-400">Sucys</div>
                 </div>
                 <div class="dropdown">
                   <button
@@ -141,7 +137,7 @@
               <a
                 href="/dierenartsen"
                 class="text-[#f84525] font-medium text-sm hover:text-red-800"
-                >View</a
+                >Ver</a
               >
             </div>
             <div
@@ -149,8 +145,15 @@
             >
               <div class="flex justify-between mb-6">
                 <div>
-                  <div class="text-2xl font-semibold mb-1">100</div>
-                  <div class="text-sm font-medium text-gray-400">Blogs</div>
+                  <div class="flex items-center mb-1">
+                    <div class="text-2xl font-semibold mb-1">100</div>
+                    <div
+                      class="p-1 rounded bg-emerald-500/10 text-emerald-500 text-[12px] font-semibold leading-none ml-2"
+                    >
+                      +30%
+                    </div>
+                  </div>
+                  <div class="text-sm font-medium text-gray-400">Pagos</div>
                 </div>
                 <div class="dropdown">
                   <button
@@ -189,10 +192,60 @@
               <a
                 href=""
                 class="text-[#f84525] font-medium text-sm hover:text-red-800"
-                >View</a
+                >Ver</a
               >
             </div>
           </div>
+          <!-- Fin de card principales -->
+          <!-- Inicio de graficas, primera fila -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div
+              class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md"
+            >
+              <div class="flex justify-between mb-4 items-start">
+                <div class="font-medium">Montos por mes</div>
+              </div>
+              <div class="overflow-x-auto">
+                <general-grafic-component></general-grafic-component>
+              </div>
+            </div>
+            <div
+              class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md"
+            >
+              <div class="flex justify-between mb-4 items-start">
+                <div class="font-medium">Aperturas por mes</div>
+              </div>
+              <div class="overflow-x-auto">
+                <monthly-openings-component></monthly-openings-component>
+              </div>
+            </div>
+          </div>
+          <!-- Fin de graficas, primera fila -->
+          <!-- Inicio de graficas, segunda fila -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div
+              class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md"
+            >
+              <div class="flex justify-between mb-4 items-start">
+                <div class="font-medium">Categorias</div>
+              </div>
+              <div class="overflow-x-auto">
+                <categories-grafic-component></categories-grafic-component>
+              </div>
+            </div>
+            <div
+              class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md"
+            >
+              <div class="flex justify-between mb-4 items-start">
+                <div class="font-medium">Estatus de usuarios</div>
+              </div>
+              <div class="overflow-x-auto">
+                <users-grafic-component></users-grafic-component>
+              </div>
+            </div>
+          </div>
+          <!-- Fin de graficas, segunda fila -->
+          <!-- Inicio de tablas principales -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <div
               class="p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded"
@@ -509,6 +562,8 @@
               </div>
             </div>
           </div>
+          <!-- Fin de tablas principales -->
+          <!-- Inicio de tablas segundarias -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             <div
               class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2"
@@ -929,6 +984,7 @@
               </div>
             </div>
           </div>
+          <!-- Fin de tablas segundarias -->
         </div>
       </div>
     </div>
@@ -939,11 +995,100 @@ import "animate.css";
 import { date } from "quasar";
 import { computed, onMounted, ref, watchEffect, watch, inject } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "./../../stores/auth";
+import { useAuthStore } from "../../stores/auth";
+import generalGraficComponent from "./grafic/generalGraficComponent.vue";
+import monthlyOpeningsComponent from "./grafic/monthlyOpeningsComponent.vue";
+import categoriesGraficComponent from "./grafic/categoriesGraficComponent.vue";
+import usersGraficComponent from "./grafic/usersGraficComponent.vue";
 const authStore = useAuthStore();
 const router = useRouter();
 import { useManageLayout } from "../../stores/manageLayout";
 const manageLayout = useManageLayout();
+const series = [
+  {
+    name: "Servings",
+    data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 65, 35],
+  },
+];
+const chartOptions = {
+  annotations: {
+    points: [
+      {
+        x: "Bananas",
+        seriesIndex: 0,
+        label: {
+          borderColor: "#775DD0",
+          offsetY: 0,
+          style: {
+            color: "#fff",
+            background: "#775DD0",
+          },
+          text: "Bananas are good",
+        },
+      },
+    ],
+  },
+  chart: {
+    height: 350,
+    type: "bar",
+  },
+  plotOptions: {
+    bar: {
+      borderRadius: 10,
+      columnWidth: "50%",
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  stroke: {
+    width: 0,
+  },
+  grid: {
+    row: {
+      colors: ["#fff", "#f2f2f2"],
+    },
+  },
+  xaxis: {
+    labels: {
+      rotate: -45,
+    },
+    categories: [
+      "Apples",
+      "Oranges",
+      "Strawberries",
+      "Pineapples",
+      "Mangoes",
+      "Bananas",
+      "Blackberries",
+      "Pears",
+      "Watermelons",
+      "Cherries",
+      "Pomegranates",
+      "Tangerines",
+      "Papayas",
+    ],
+    tickPlacement: "on",
+  },
+  yaxis: {
+    title: {
+      text: "Servings",
+    },
+  },
+  fill: {
+    type: "gradient",
+    gradient: {
+      shade: "light",
+      type: "horizontal",
+      shadeIntensity: 0.25,
+      gradientToColors: undefined,
+      inverseColors: true,
+      opacityFrom: 0.85,
+      opacityTo: 0.85,
+      stops: [50, 0, 100],
+    },
+  },
+};
 defineOptions({
   name: "dashboardComponent",
 });

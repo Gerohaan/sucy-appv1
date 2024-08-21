@@ -4,7 +4,7 @@
       <Navbar></Navbar>
     </q-header>
 
-    <q-drawer v-model="manageLayout.getSideBar" show-if-above>
+    <q-drawer v-model="manageLayout.sideBarOpen" show-if-above>
       <Sidebar />
     </q-drawer>
 
