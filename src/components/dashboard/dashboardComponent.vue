@@ -27,11 +27,11 @@
           <p class="text-2xl font-semibold mb-2 lg:mb-0">
             Hola, {{ authStore.getDataUser.name }}
           </p>
-          <button
+          <!-- <button
             class="bg-blue-500 hover:bg-blue-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
           >
             View Logs
-          </button>
+          </button> -->
         </div>
 
         <div class="">
@@ -256,7 +256,7 @@
                     <h3
                       class="font-semibold text-base text-gray-900 dark:text-gray-50"
                     >
-                      Users
+                      Usuarios
                     </h3>
                   </div>
                 </div>
@@ -269,12 +269,12 @@
                         <th
                           class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                         >
-                          Role
+                          Rol
                         </th>
                         <th
                           class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                         >
-                          Amount
+                          Cantidad
                         </th>
                         <th
                           class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px"
@@ -407,7 +407,7 @@
               class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md"
             >
               <div class="flex justify-between mb-4 items-start">
-                <div class="font-medium">Activities</div>
+                <div class="font-medium">Actividad</div>
                 <div class="dropdown">
                   <button
                     type="button"
@@ -569,7 +569,7 @@
               class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2"
             >
               <div class="flex justify-between mb-4 items-start">
-                <div class="font-medium">Order Statistics</div>
+                <div class="font-medium">Estadisticas</div>
                 <div class="dropdown">
                   <button
                     type="button"
@@ -652,7 +652,7 @@
               class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md"
             >
               <div class="flex justify-between mb-4 items-start">
-                <div class="font-medium">Earnings</div>
+                <div class="font-medium">Ganancias</div>
                 <div class="dropdown">
                   <button
                     type="button"

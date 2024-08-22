@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title> Sucy App </q-toolbar-title>
+        <q-toolbar-title> SucyApp </q-toolbar-title>
 
         <div><!-- Sucy v{{ $q.version }} --></div>
       </q-toolbar>

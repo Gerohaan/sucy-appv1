@@ -18,7 +18,7 @@
     </div>
 
     <div class="mb-4 px-4">
-      <p class="pl-4 text-sm font-semibold mb-1">MAIN</p>
+      <p class="pl-4 text-sm font-semibold mb-1">Principal</p>
       <div
         class="w-full flex items-center text-blue-400 h-10 pl-4 bg-gray-200 hover:bg-gray-200 rounded-lg cursor-pointer"
       >
