@@ -241,7 +241,7 @@
 
 <script setup>
 import "animate.css";
-import { date, Loading, QSpinnerHourglass } from "quasar";
+import { date, Loading, QSpinnerOval } from "quasar";
 import { useAuthStore } from "./../../stores/auth";
 import { computed, onMounted, ref, watchEffect, watch, inject } from "vue";
 import { useRouter } from "vue-router";
@@ -255,7 +255,7 @@ defineOptions({
 watchEffect(() => {
   if (authStore.loading) {
     Loading.show({
-      spinner: QSpinnerHourglass,
+      spinner: QSpinnerOval,
       spinnerColor: "primary",
       spinnerSize: 120,
       backgroundColor: "cyan-1",
