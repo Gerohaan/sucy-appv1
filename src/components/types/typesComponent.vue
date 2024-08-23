@@ -24,11 +24,7 @@
 
       <div class="lg:flex justify-between items-center mb-6">
         <p class="text-2xl font-semibold mb-2 lg:mb-0">Listado de Tipos</p>
-        <!-- <button
-            class="bg-blue-500 hover:bg-blue-600 focus:outline-none rounded-lg px-6 py-2 text-white font-semibold shadow"
-          >
-            View Logs
-          </button> -->
+        <!-- <q-btn flat round color="blue" size="lg" icon="add_circle" /> -->
       </div>
 
       <div class="">
@@ -66,6 +62,15 @@
         </div>
       </div>
     </div>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn
+        fab
+        icon="add"
+        dense
+        color="blue"
+        @click="handleRouter('addTypes')"
+      />
+    </q-page-sticky>
   </div>
 </template>
 <script setup>

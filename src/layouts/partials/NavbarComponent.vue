@@ -82,7 +82,11 @@
     >
       <a href="#" class="block px-4 py-2 hover:bg-gray-200">Cuenta</a>
       <a href="#" class="block px-4 py-2 hover:bg-gray-200">Configuración</a>
-      <a @click="logout()" class="block px-4 py-2 hover:bg-gray-200">Salir</a>
+      <a
+        @click="logout()"
+        class="cursor-pointer block px-4 py-2 hover:bg-gray-200"
+        >Salir</a
+      >
     </div>
     <!-- dropdown menu end -->
   </div>
@@ -94,6 +98,7 @@ import { useManageLayout } from "./../../stores/manageLayout";
 import { useAuthStore } from "./../../stores/auth";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+
 defineOptions({
   name: "NavbarComponent",
 });
@@ -125,14 +130,7 @@ const logout = () => {
     },
   })
     .onOk(async () => {
-      try {
-        await authStore.logoutUser();
-        handleRouter("login");
-      } catch (error) {
-        console.log(error);
-      }
-    })
-    .onOk(async () => {
+      return;
       try {
         await authStore.logoutUser();
         handleRouter("login");

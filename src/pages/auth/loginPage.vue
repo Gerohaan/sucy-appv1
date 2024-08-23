@@ -275,6 +275,7 @@ import { date, Loading, QSpinnerOval } from "quasar";
 import { useAuthStore } from "./../../stores/auth";
 import { computed, onMounted, ref, watchEffect, watch, inject } from "vue";
 import { useRouter } from "vue-router";
+import { Notify } from "quasar";
 const authStore = useAuthStore();
 const router = useRouter();
 defineOptions({
@@ -325,6 +326,11 @@ const onRegister = async () => {
     await authStore.registerUser(user);
     handleRouter("dashboard");
   } catch (error) {
+    Notify.create({
+      type: "negative",
+      message: error.response.data.errors.email[0],
+      position: "bottom-right",
+    });
     console.log(error);
   }
 };

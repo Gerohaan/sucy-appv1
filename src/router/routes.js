@@ -45,6 +45,14 @@ const routes = [
         }
       },
       {
+        path: 'addTypes',
+        name: 'addTypes',
+        component: () => import('./../components/types/addTypesComponent.vue'),
+        meta: {
+          authRequired: true,
+        }
+      },
+      {
         path: 'users',
         name: 'users',
         component: () => import('pages/users/indexUsers.vue'),
