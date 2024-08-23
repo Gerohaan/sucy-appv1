@@ -20,6 +20,14 @@ const routes = [
           authRequired: true,
         }
       },
+      {
+        path: 'sucy',
+        name: 'sucy',
+        component: () => import('pages/sucys/indexSucy.vue'),
+        meta: {
+          authRequired: true,
+        }
+      },
     ]
   },
 

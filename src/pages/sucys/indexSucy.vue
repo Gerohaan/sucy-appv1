@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <div class="w-full animate__animated animate__fadeIn">
-      <dashboard></dashboard>
+      <sucy-component></sucy-component>
     </div>
   </q-page>
 </template>
@@ -11,8 +11,8 @@ import "animate.css";
 import { date } from "quasar";
 import { computed, onMounted, ref, watchEffect, watch, inject } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "./../../stores/auth";
-import dashboard from "../../components/dashboard/dashboardComponent.vue";
+import { useAuthStore } from "../../stores/auth";
+import sucyComponent from "../../components/sucys/sucyComponent.vue";
 const authStore = useAuthStore();
 const router = useRouter();
 defineOptions({
