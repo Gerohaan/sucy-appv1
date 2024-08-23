@@ -28,6 +28,14 @@ const routes = [
           authRequired: true,
         }
       },
+      {
+        path: 'categories',
+        name: 'categories',
+        component: () => import('pages/categories/indexCategories.vue'),
+        meta: {
+          authRequired: true,
+        }
+      },
     ]
   },
 
