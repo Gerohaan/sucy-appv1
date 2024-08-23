@@ -74,7 +74,7 @@
           </p>
         </div>
         <div class="mt-5">
-          <q-form @submit="onSubmit" @reset="onReset">
+          <q-form @submit="onRegister" @reset="onReset">
             <div class="relative mt-6">
               <q-input
                 dense
@@ -107,6 +107,36 @@
               >
             </div>
             <div class="relative mt-6">
+              <q-input
+                dense
+                v-model="email"
+                lazy-rules
+                :rules="[(val) => emailVal(val)]"
+              />
+              <label
+                for="email"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                >Correo</label
+              >
+            </div>
+            <div class="relative mt-6">
+              <q-input
+                dense
+                v-model="password"
+                type="password"
+                :rules="[
+                  (val) =>
+                    (val && val.length >= 6) ||
+                    'La contraseña debe tener al menos 6 caracteres',
+                ]"
+              />
+              <label
+                for="password"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                >Contraseña</label
+              >
+            </div>
+            <!--  <div class="relative mt-6">
               <q-select
                 dense
                 :options="nacList"
@@ -215,7 +245,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="my-6">
               <button
                 type="submit"
@@ -245,10 +275,8 @@ import { date, Loading, QSpinnerOval } from "quasar";
 import { useAuthStore } from "./../../stores/auth";
 import { computed, onMounted, ref, watchEffect, watch, inject } from "vue";
 import { useRouter } from "vue-router";
-
 const authStore = useAuthStore();
 const router = useRouter();
-
 defineOptions({
   name: "LoginPage",
 });
@@ -281,6 +309,20 @@ const sendLogin = async () => {
   };
   try {
     await authStore.loginUser(user);
+    handleRouter("dashboard");
+  } catch (error) {
+    console.log(error);
+  }
+};
+const onRegister = async () => {
+  const user = {
+    name: names.value + " " + LastNames.value,
+    email: email.value,
+    password: password.value,
+    password_confirmation: password.value,
+  };
+  try {
+    await authStore.registerUser(user);
     handleRouter("dashboard");
   } catch (error) {
     console.log(error);

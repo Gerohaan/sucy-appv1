@@ -97,6 +97,7 @@
       </div>
       <div
         class="w-full flex items-center text-blue-400 h-10 pl-4 hover:bg-gray-200 rounded-lg cursor-pointer"
+        @click="handleRouter('types')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -149,6 +150,7 @@
       <p class="pl-4 text-sm font-semibold mb-1">CONFIGURACIÓN</p>
       <div
         class="w-full flex items-center text-blue-400 h-10 pl-4 hover:bg-gray-200 rounded-lg cursor-pointer"
+        @click="handleRouter('users')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -4,7 +4,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/auth/loginPage.vue') }
+      { path: '', name: 'login', component: () => import('src/pages/auth/loginPage.vue') }
     ]
   },
   {
@@ -32,6 +32,22 @@ const routes = [
         path: 'categories',
         name: 'categories',
         component: () => import('pages/categories/indexCategories.vue'),
+        meta: {
+          authRequired: true,
+        }
+      },
+      {
+        path: 'types',
+        name: 'types',
+        component: () => import('pages/types/indexTypes.vue'),
+        meta: {
+          authRequired: true,
+        }
+      },
+      {
+        path: 'users',
+        name: 'users',
+        component: () => import('pages/users/indexUsers.vue'),
         meta: {
           authRequired: true,
         }

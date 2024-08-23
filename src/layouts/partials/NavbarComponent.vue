@@ -82,7 +82,7 @@
     >
       <a href="#" class="block px-4 py-2 hover:bg-gray-200">Cuenta</a>
       <a href="#" class="block px-4 py-2 hover:bg-gray-200">Configuración</a>
-      <a href="#" class="block px-4 py-2 hover:bg-gray-200">Salir</a>
+      <a @click="logout()" class="block px-4 py-2 hover:bg-gray-200">Salir</a>
     </div>
     <!-- dropdown menu end -->
   </div>
@@ -91,9 +91,56 @@
 <script setup>
 import { computed, onMounted, ref, watchEffect, watch, inject } from "vue";
 import { useManageLayout } from "./../../stores/manageLayout";
+import { useAuthStore } from "./../../stores/auth";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 defineOptions({
   name: "NavbarComponent",
 });
 const manageLayout = useManageLayout();
+const authStore = useAuthStore();
+const router = useRouter();
 const dropDownOpen = ref(false);
+const $q = useQuasar();
+const handleRouter = (name, params = {}, query = {}) => {
+  router
+    .push({
+      name: name,
+    })
+    .catch(() => {});
+};
+const logout = () => {
+  $q.dialog({
+    title: "Salir",
+    message: "¿Confirma salir de la aplicación?",
+    cancel: true,
+    persistent: true,
+    ok: {
+      push: true,
+      color: "blue",
+    },
+    cancel: {
+      push: true,
+      color: "negative",
+    },
+  })
+    .onOk(async () => {
+      try {
+        await authStore.logoutUser();
+        handleRouter("login");
+      } catch (error) {
+        console.log(error);
+      }
+    })
+    .onOk(async () => {
+      try {
+        await authStore.logoutUser();
+        handleRouter("login");
+      } catch (error) {
+        console.log(error);
+      }
+    })
+    .onCancel(() => {})
+    .onDismiss(() => {});
+};
 </script>

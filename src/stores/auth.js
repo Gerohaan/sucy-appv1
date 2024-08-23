@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { login } from "./../services/authService"
+import { register, login, logout, getAll } from "./../services/authService"
 import { Notify } from 'quasar'
 import { ref } from 'vue';
 
@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => {
     return {
       userInfo: ref({}),
+      userList: ref([]),
       accessToken: ref(''),
       tokenType: ref(''),
       loading: false,
@@ -18,6 +19,9 @@ export const useAuthStore = defineStore('auth', {
     getUser(state) {
       return state.userInfo
     },
+    getUserList(state) {
+      return state.userList
+    },
     getDataUser(state) {
       state.dataUser = {
         name: localStorage.getItem('nameUser'),
@@ -28,6 +32,28 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
 
+    async registerUser(param) {
+      this.loading = true
+      try {
+        this.response.value = await register(param)
+        this.userInfo.value = this.response.value
+        localStorage.setItem('sucyAppToken', this.userInfo.value.access_token)
+        localStorage.setItem('nameUser', this.userInfo.value.data.name)
+        localStorage.setItem('emailUser', this.userInfo.value.data.email)
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        Notify.create({
+          type: 'negative',
+          message: error.response.data.message,
+          position: 'bottom-right'
+        })
+        console.log(error);
+
+        throw error
+      }
+    },
+
     async loginUser(param) {
       this.loading = true
       try {
@@ -36,6 +62,47 @@ export const useAuthStore = defineStore('auth', {
         localStorage.setItem('sucyAppToken', this.userInfo.value.access_token)
         localStorage.setItem('nameUser', this.userInfo.value.data.name)
         localStorage.setItem('emailUser', this.userInfo.value.data.email)
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        Notify.create({
+          type: 'negative',
+          message: error.response.data.message,
+          position: 'bottom-right'
+        })
+        console.log(error);
+
+        throw error
+      }
+    },
+
+    async logoutUser() {
+      this.loading = true
+      try {
+        this.response.value = await logout()
+        this.userInfo.value = {}
+        localStorage.removeItem('sucyAppToken')
+        localStorage.removeItem('nameUser')
+        localStorage.removeItem('emailUser')
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        Notify.create({
+          type: 'negative',
+          message: error.response.data.message,
+          position: 'bottom-right'
+        })
+        console.log(error);
+
+        throw error
+      }
+    },
+
+    async getUsersAll() {
+      this.loading = true
+      try {
+        this.response.value = await getAll()
+        this.userList.value = this.response.value
         this.loading = false
       } catch (error) {
         this.loading = false
