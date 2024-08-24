@@ -53,6 +53,14 @@ const routes = [
         }
       },
       {
+        path: 'editTypes/:id',
+        name: 'editTypes',
+        component: () => import('./../components/types/editTypesComponent.vue'),
+        meta: {
+          authRequired: true,
+        }
+      },
+      {
         path: 'users',
         name: 'users',
         component: () => import('pages/users/indexUsers.vue'),

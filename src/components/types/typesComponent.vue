@@ -42,8 +42,8 @@
               <q-td :props="props">
                 <q-btn
                   color="primary"
-                  icon="visibility"
-                  @click="editRow(props.row.id)"
+                  icon="edit"
+                  @click="editType(props.row.id)"
                   flat
                   round
                   dense
@@ -51,7 +51,7 @@
                 <q-btn
                   color="negative"
                   icon="delete"
-                  @click="deleteRow(props.row.id)"
+                  @click="confirmDelete(props.row.id)"
                   flat
                   round
                   dense
@@ -78,11 +78,13 @@ import "animate.css";
 import { date } from "quasar";
 import { computed, onMounted, ref, watchEffect, watch, inject } from "vue";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 import { useTypesStore } from "../../stores/types";
 const typesStore = useTypesStore();
 const router = useRouter();
 import { useManageLayout } from "../../stores/manageLayout";
 const manageLayout = useManageLayout();
+const $q = useQuasar();
 const loading = ref(false);
 const columns = [
   {
@@ -141,8 +143,45 @@ watchEffect(async () => {
 const handleRouter = (name, params = {}, query = {}) => {
   router
     .push({
-      name: name,
+      name,
+      params,
     })
     .catch(() => {});
+};
+const editType = async (id) => {
+  let params = {
+    id: id,
+  };
+  handleRouter("editTypes", params);
+};
+const confirmDelete = async (id) => {
+  $q.dialog({
+    title: "Eliminar",
+    message: "¿Confirma eliminar el registro?",
+    cancel: true,
+    persistent: true,
+    ok: {
+      push: true,
+      color: "blue",
+    },
+    cancel: {
+      push: true,
+      color: "negative",
+    },
+  })
+    .onOk(async () => {
+      await deleteType(id);
+    })
+    .onCancel(() => {})
+    .onDismiss(() => {});
+};
+const deleteType = async (id) => {
+  try {
+    await typesStore.typesDelete(id);
+    await typesStore.typesAll();
+    rows.value = await typesStore.getTypes?.value;
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>

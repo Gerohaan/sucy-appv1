@@ -16,14 +16,14 @@
             </svg>
           </li>
           <li class="flex items-center">
-            <a href="#" class="text-gray-600">Agregar tipo</a>
+            <a href="#" class="text-gray-600">Modificar tipo</a>
           </li>
         </ol>
       </nav>
       <!-- breadcrumb end -->
 
       <div class="">
-        <q-form @submit="sendType()">
+        <q-form @submit="editType()">
           <div class="q-pa-md example-row-equal-width">
             <div class="row">
               <div class="col q-pa-sm">
@@ -42,14 +42,23 @@
             <div class="row">
               <div class="col q-pa-sm text-right">
                 <q-btn
+                  class="q-ma-xs"
+                  outline
+                  color="secondary"
+                  @click="handleRouter('types')"
+                  style="border-radius: 8px"
+                  no-caps
+                  label="Regresar"
+                />
+                <q-btn
                   :loading="loading"
                   outline
                   type="submit"
                   color="blue"
                   style="border-radius: 8px"
-                  class=""
+                  class="q-ma-xs"
                   no-caps
-                  label="Registrar"
+                  label="Actualizar"
                 />
               </div>
             </div>
@@ -69,12 +78,22 @@ const typesStore = useTypesStore();
 const router = useRouter();
 const loading = ref(false);
 const name = ref("");
+const status = ref("");
+const id = ref(null);
+const paramsId = router.currentRoute.value.params.id;
 defineOptions({
   name: "addTypesComponent",
 });
-onMounted(async () => {});
+onMounted(async () => {
+  await typesStore.typeShow(paramsId);
+});
 watchEffect(async () => {
   loading.value = typesStore.loading;
+  if (typesStore.getTypeById.value) {
+    name.value = typesStore.getTypeById.value.name;
+    status.value = typesStore.getTypeById.value.id;
+    id.value = typesStore.getTypeById.value.status;
+  }
 });
 const handleRouter = (name, params = {}, query = {}) => {
   router
@@ -83,12 +102,13 @@ const handleRouter = (name, params = {}, query = {}) => {
     })
     .catch(() => {});
 };
-const sendType = async () => {
+const editType = async () => {
   const type = {
     name: name.value,
+    status: status.value,
   };
   try {
-    await typesStore.typesAdd(type);
+    await typesStore.typesUpdate(type, id.value);
     handleRouter("types");
   } catch (error) {
     console.log(error);
