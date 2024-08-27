@@ -29,9 +29,25 @@ const routes = [
         }
       },
       {
+        path: 'addSucy',
+        name: 'addSucy',
+        component: () => import('./../components/sucys/addSucyComponent.vue'),
+        meta: {
+          authRequired: true,
+        }
+      },
+      {
         path: 'categories',
         name: 'categories',
         component: () => import('pages/categories/indexCategories.vue'),
+        meta: {
+          authRequired: true,
+        }
+      },
+      {
+        path: 'addCategories',
+        name: 'addCategories',
+        component: () => import('./../components/categories/addCategoriesComponent.vue'),
         meta: {
           authRequired: true,
         }

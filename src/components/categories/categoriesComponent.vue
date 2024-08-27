@@ -63,7 +63,7 @@
               <q-td :props="props">
                 <q-btn
                   color="primary"
-                  icon="visibility"
+                  icon="edit"
                   @click="editRow(props.row.id)"
                   flat
                   round
@@ -83,6 +83,15 @@
         </div>
       </div>
     </div>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn
+        fab
+        icon="add"
+        dense
+        color="blue"
+        @click="handleRouter('addCategories')"
+      />
+    </q-page-sticky>
   </div>
 </template>
 <script setup>
