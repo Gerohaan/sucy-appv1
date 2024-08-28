@@ -57,7 +57,7 @@
                 <q-btn
                   color="primary"
                   icon="visibility"
-                  @click="editRow(props.row.id)"
+                  @click="detailsSucy(props.row.id)"
                   flat
                   round
                   dense
@@ -65,7 +65,7 @@
                 <q-btn
                   color="negative"
                   icon="delete"
-                  @click="deleteRow(props.row.id)"
+                  @click="confirmDelete(props.row.id)"
                   flat
                   round
                   dense
@@ -93,8 +93,10 @@ import { date } from "quasar";
 import { computed, onMounted, ref, watchEffect, watch, inject } from "vue";
 import { useRouter } from "vue-router";
 import { useSucyStore } from "../../stores/sucy";
+import { useQuasar } from "quasar";
 const sucyStore = useSucyStore();
 const router = useRouter();
+const $q = useQuasar();
 import { useManageLayout } from "../../stores/manageLayout";
 const manageLayout = useManageLayout();
 const loading = ref(false);
@@ -206,6 +208,37 @@ onMounted(async () => {
 watchEffect(async () => {
   loading.value = sucyStore.loading;
 });
+const detailsSucy = async (id) => {};
+const confirmDelete = async (id) => {
+  $q.dialog({
+    title: "Eliminar",
+    message: "¿Confirma eliminar el registro?",
+    cancel: true,
+    persistent: true,
+    ok: {
+      push: true,
+      color: "blue",
+    },
+    cancel: {
+      push: true,
+      color: "negative",
+    },
+  })
+    .onOk(async () => {
+      await deleteSucy(id);
+    })
+    .onCancel(() => {})
+    .onDismiss(() => {});
+};
+const deleteSucy = async (id) => {
+  try {
+    await sucyStore.sucyDelete(id);
+    await sucyStore.sucyAll();
+    rows.value = await typesStore.getTypes?.value;
+  } catch (error) {
+    console.log(error);
+  }
+};
 const handleRouter = (name, params = {}, query = {}) => {
   router
     .push({

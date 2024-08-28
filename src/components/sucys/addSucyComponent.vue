@@ -46,12 +46,14 @@
                 <q-input
                   label="Participantes"
                   color="blue"
-                  v-model="participants"
+                  v-model.number="participants"
+                  type="number"
                   lazy-rules
                   :rules="[
+                    (val) => !!val || 'Campo Participantes es requerido',
                     (val) =>
-                      (val && val.length > 0) ||
-                      'Campo Participantes es requerido',
+                      parseInt(val) >= 1 ||
+                      'Debe asignar al menos un participante',
                   ]"
                 />
               </div>
@@ -63,12 +65,33 @@
                   color="blue"
                   v-model="date_begin"
                   lazy-rules
+                  mask="date"
                   :rules="[
-                    (val) =>
-                      (val && val.length > 0) ||
-                      'Campo Fecha de inicio es requerido',
+                    'date',
+                    (val) => !!val || 'Campo Fecha de inicio es requerido',
                   ]"
-                />
+                >
+                  <template v-slot:append>
+                    <q-icon name="event" class="cursor-pointer">
+                      <q-popup-proxy
+                        cover
+                        transition-show="scale"
+                        transition-hide="scale"
+                      >
+                        <q-date v-model="date_begin">
+                          <div class="row items-center justify-end">
+                            <q-btn
+                              v-close-popup
+                              label="cerrar"
+                              color="primary"
+                              flat
+                            />
+                          </div>
+                        </q-date>
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
               </div>
               <div
                 class="col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 q-pa-sm"
@@ -79,11 +102,31 @@
                   v-model="date_end"
                   lazy-rules
                   :rules="[
-                    (val) =>
-                      (val && val.length > 0) ||
-                      'Campo Fecha de culminación es requerido',
+                    'date',
+                    (val) => !!val || 'Campo Fecha de inicio es requerido',
                   ]"
-                />
+                >
+                  <template v-slot:append>
+                    <q-icon name="event" class="cursor-pointer">
+                      <q-popup-proxy
+                        cover
+                        transition-show="scale"
+                        transition-hide="scale"
+                      >
+                        <q-date v-model="date_end">
+                          <div class="row items-center justify-end">
+                            <q-btn
+                              v-close-popup
+                              label="cerrar"
+                              color="primary"
+                              flat
+                            />
+                          </div>
+                        </q-date>
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
               </div>
               <div
                 class="col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 q-pa-sm"
@@ -91,12 +134,12 @@
                 <q-input
                   label="Monto cuota ($)"
                   color="blue"
-                  v-model="monto_cuota"
+                  v-model.number="monto_cuota"
+                  type="number"
                   lazy-rules
                   :rules="[
-                    (val) =>
-                      (val && val.length > 0) ||
-                      'Campo Monto cuota es requerido',
+                    (val) => !!val || 'Campo Monto cuota es requerido',
+                    (val) => parseInt(val) >= 1 || 'Monto incorrecto',
                   ]"
                 />
               </div>
@@ -107,44 +150,34 @@
                   label="Tipo"
                   color="blue"
                   v-model="type_id"
-                  option-value="id"
                   :options="typesList"
-                  emit-value
-                  map-options
                   :loading="loadingType"
                   lazy-rules
-                  :rules="[
-                    (val) =>
-                      (val && val.length > 0) || 'Campo Tipo es requerido',
-                  ]"
+                  :rules="[(val) => !!val || 'Campo Tipo es requerido']"
                 />
               </div>
               <div
                 class="col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 q-pa-sm"
               >
-                <q-input
+                <q-select
                   label="Usuario"
                   color="blue"
                   v-model="user_id"
+                  :options="usersList"
                   lazy-rules
-                  :rules="[
-                    (val) =>
-                      (val && val.length > 0) || 'Campo Usuario es requerido',
-                  ]"
+                  :rules="[(val) => !!val || 'Campo Usuario es requerido']"
                 />
               </div>
               <div
                 class="col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 q-pa-sm"
               >
-                <q-input
+                <q-select
                   label="Estatus"
                   color="blue"
                   v-model="status"
+                  :options="statusOptions"
                   lazy-rules
-                  :rules="[
-                    (val) =>
-                      (val && val.length > 0) || 'Campo Estatus es requerido',
-                  ]"
+                  :rules="[(val) => !!val || 'Campo Estatus es requerido']"
                 />
               </div>
             </div>
@@ -174,20 +207,36 @@ import { date } from "quasar";
 import { computed, onMounted, ref, watchEffect, watch, inject } from "vue";
 import { useRouter } from "vue-router";
 import { useTypesStore } from "../../stores/types";
+import { useSucyStore } from "../../stores/sucy";
 const typesStore = useTypesStore();
+const sucyStore = useSucyStore();
 const router = useRouter();
 const loading = ref(false);
 const loadingType = ref(false);
 const name = ref("");
 const date_begin = ref("");
 const date_end = ref("");
-const participants = ref(null);
+const participants = ref(1);
 const monto_cuota = ref(0);
 const type_id = ref(null);
 const status = ref("");
+const statusOptions = ["Activo", "Inactivo"];
 const user_id = ref(null);
 const typesList = ref([]);
-const typeOptions = ref([]);
+const usersList = [
+  {
+    value: 3,
+    label: "pedro delgado",
+  },
+  {
+    value: 4,
+    label: "Gerohaan Torrealba",
+  },
+  {
+    value: 5,
+    label: "gerohaan torrealba",
+  },
+];
 defineOptions({
   name: "addSucyComponent",
 });
@@ -196,12 +245,15 @@ onMounted(async () => {
 });
 watchEffect(async () => {
   loadingType.value = typesStore.loading;
-  if (typesStore.getTypes) {
-    typesList.value = await typesStore.getTypes.value;
+  loading.value = sucyStore.loading;
+  if (typesStore.getTypes.value) {
+    typesList.value = await typesStore.getTypes.value.map((item) => {
+      return {
+        value: item.id,
+        label: item.name,
+      };
+    });
   }
-  console.log(typesList.value);
-
-  //loading.value = sucyStore.loading;
 });
 const handleRouter = (name, params = {}, query = {}) => {
   router
@@ -211,12 +263,21 @@ const handleRouter = (name, params = {}, query = {}) => {
     .catch(() => {});
 };
 const sendSucy = async () => {
-  const type = {
+  const sucy = {
     name: name.value,
+    participants: participants.value,
+    date_begin: date_begin.value,
+    date_end: date_end.value,
+    monto_cuota: monto_cuota.value,
+    type_id: type_id.value.value,
+    share: participants.value,
+    user_id: user_id.value.value,
+    status: status.value,
   };
+
   try {
-    await typesStore.typesAdd(type);
-    handleRouter("types");
+    await sucyStore.sucyAdd(sucy);
+    handleRouter("sucy");
   } catch (error) {
     console.log(error);
   }
